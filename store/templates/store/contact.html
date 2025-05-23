@@ -1,0 +1,52 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .contact-container {
+        margin-top: 80px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .contact-container h3 {
+        font-weight: bold;
+        color: #1a1d20;
+        margin-bottom: 10px;
+    }
+
+    .contact-container p {
+        font-size: 16px;
+        color: #1a1d20;
+        margin-bottom: 20px;
+    }
+
+    .contact-info i {
+        margin-right: 10px;
+        color: #1a1d20;
+    }
+</style>
+
+<div class="container">
+    <div class=" text-center island-container">
+        <h3>Contactează-ne</h3>
+        <p class="text-muted">Suntem aici pentru a răspunde întrebărilor tale.</p>
+
+        <div class="contact-info text-start mt-4">
+            <p><i class="fa fa-map-marker"></i><strong>Adresă:</strong> Negreni, Cluj-Napoca, România</p>
+            <p><i class="fa fa-envelope" ></i><strong>Email 1:</strong> <a href="mailto:hardwoodpellets1@gmail.com" style ="color: #1a1d20">hardwoodpellets1@gmail.com</a></p>
+            <p><i class="fa fa-envelope" ></i><strong>Email 2:</strong> <a href="mailto:szabo.andreeas@yahoo.com" style ="color: #1a1d20">szabo.andreeas@yahoo.com</a></p>
+            <p><i class="fa fa-phone"></i><strong>Telefon:</strong> <a href="tel:+40757760450" style="color: #1a1d20">+40 757 760 450</a></p>
+        </div>
+
+        <div class="mt-4 ratio ratio-16x9">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21784.467863936366!2d22.733990370856176!3d46.96054094283511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47488c1fdef08b0d%3A0xd250660093b1308f!2s407440%20Negreni!5e0!3m2!1sro!2sro!4v1746144378183!5m2!1sro!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}

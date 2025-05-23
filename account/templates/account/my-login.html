@@ -1,0 +1,64 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+    .login-container {
+        margin-top: 80px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-container h3 {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .login-container h5 {
+        color: #6c757d;
+        font-weight: normal;
+        margin-bottom: 30px;
+    }
+
+    .btn-login {
+        font-size: 18px;
+        padding: 12px;
+    }
+</style>
+
+<div class="container">
+    <div class="login-container bg-primary">
+        <h3>Autentificare</h3>
+        <h5>Intră în contul tău pentru a comanda produsele preferate</h5>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ form.username|as_crispy_field }}
+            <br>
+            {{ form.password|as_crispy_field }}
+
+            <button type="submit" class="btn btn-secondary w-100 mt-4 btn-login">
+                🔐 Autentifică-te
+            </button>
+            <br>
+            {{ form.non_field_errors }}
+            <br>
+            <div class ="text-center">
+                <a href="{% url 'register' %}" class="btn btn-link" style="color: black">Nu ai un cont? Înregistrează-te!</a>
+            </div>
+            <div class = "text-center">
+                <a href="{% url 'reset_password' %}" class="btn btn-link" style="color: black">Ai uitat parola?</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

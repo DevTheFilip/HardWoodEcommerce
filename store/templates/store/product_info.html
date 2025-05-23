@@ -1,0 +1,192 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .product-container {
+        background-color: #78c2ad;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        margin-top: 40px;
+    }
+
+    .product-image {
+        border-radius: 16px;
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-height: 450px;
+        width: 100%;
+    }
+
+    .product-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .product-brand {
+        color: #6c757d;
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+
+    .product-description {
+        font-size: 1rem;
+        color: #555;
+        margin-top: 20px;
+    }
+
+    .product-info-box {
+        border: 1px solid #DAFFE3;
+        border-radius: 16px;
+        padding: 20px;
+        background-color: #78c2ad;
+        margin-top: 30px;
+    }
+
+    .price-label {
+        font-size: 1.2rem;
+        color: #6c757d;
+    }
+
+    .price-value {
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #000;
+    }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .qty-input {
+        width: 60px;
+        text-align: center;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 6px;
+    }
+
+    .qty-btn {
+        padding: 6px 12px;
+        font-size: 18px;
+        background-color: #e9ecef;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .qty-btn:hover {
+        background-color: #dee2e6;
+    }
+
+    .add-to-cart-btn {
+        font-size: 1rem;
+        padding: 8px 16px;
+        color: #1a1d20;
+        border-radius: 8px;
+        width: auto; /* Ensure it doesn’t stretch by default */
+        white-space: nowrap; /* Prevent weird wrapping */
+    }
+
+    @media (max-width: 1000px) {
+        .add-to-cart-btn {
+            font-size: 0.65rem; /* Slightly smaller font */
+            padding: 6px 10px;  /* Slightly tighter padding */
+            width: auto;        /* Keep natural size */
+            max-width: 100%;    /* Prevent overflow */
+        }
+    }
+</style>
+
+<div class="container product-container">
+    <div class="row align-items-start">
+        <div class="col-md-5">
+            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.title }}">
+        </div>
+
+        <div class="col-md-7 ps-md-5 mt-4 mt-md-0">
+            <h1 class="product-title">{{ product.title }}</h1>
+            <div class="product-brand">{{ product.brand }}</div>
+
+            <div class="product-description">{{ product.description }}</div>
+
+            <div class="product-info-box mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="price-label">Preț:</div>
+                    <div class="price-value">LEI {{ product.price }}</div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <label for="quantity" class="form-label mb-1">Cantitate</label>
+                        <div class="quantity-control">
+                            <button type="button" class="qty-btn" id="decrease">−</button>
+                            <input type="number" id="quantity" class="qty-input" value="1" min="1">
+                            <button type="button" class="qty-btn" id="increase">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <br>
+
+                        <button type="button" id="add-button" value="{{ product.id }}" class="btn bg-white add-to-cart-btn">
+                            🛒 Adaugă în coș
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Quantity buttons
+    document.getElementById('increase').addEventListener('click', function () {
+        let qtyInput = document.getElementById('quantity');
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+    });
+
+    document.getElementById('decrease').addEventListener('click', function () {
+        let qtyInput = document.getElementById('quantity');
+        let current = parseInt(qtyInput.value);
+        if (current > 1) {
+            qtyInput.value = current - 1;
+        }
+    });
+
+    // Prevent negative numbers manually
+    document.getElementById('quantity').addEventListener('input', function () {
+        if (parseInt(this.value) < 1 || isNaN(this.value)) {
+            this.value = 1;
+        }
+    });
+
+    // Add to cart
+    $(document).on('click', '#add-button', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart-add" %}',
+            data: {
+                product_id: $('#add-button').val(),
+                product_quantity: $('#quantity').val(),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("cart-qty").textContent = json.qty
+            },
+            error: function (xhr, errmsg, err) {
+                console.error("Eroare la adăugare în coș:", errmsg);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

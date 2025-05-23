@@ -1,0 +1,63 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+    .delete-account-container {
+        margin-top: 60px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .delete-account-container h3 {
+        color: #dc3545;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .delete-account-container p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .btn-danger,
+    .btn-secondary {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .btn-group-custom {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+</style>
+
+<div class="container">
+    <div class="delete-account-container">
+        <h3>Ștergere cont</h3>
+        <p>⚠️ Ești sigur că dorești să îți ștergi contul? Această acțiune este ireversibilă.</p>
+
+        <div class="btn-group-custom">
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger w-100 mt-2">
+                    🗑️ ȘTERGE CONTUL DEFINITIV
+                </button>
+            </form>
+
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary w-100">
+                🔙 Înapoi la Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

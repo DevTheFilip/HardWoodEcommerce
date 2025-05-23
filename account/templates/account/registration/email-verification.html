@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Salut!
+
+Mulțumim că ai ales să te înregistrezi pe HardWood Pellets!
+
+Pentru a finaliza procesul de înregistrare, te rugăm să confirmi contul tău accesând următorul link:
+
+[Confirmă contul tău]( https://{{ domain }}{% url 'email-verification' uidb64=uid token=token %} )
+
+Dacă nu ai făcut această înregistrare, te rugăm să ignori acest email.
+
+{% endautoescape %}

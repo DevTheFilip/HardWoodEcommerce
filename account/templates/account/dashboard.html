@@ -1,0 +1,80 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+
+    .dashboard-section {
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-section h4 {
+        margin-bottom: 15px;
+    }
+
+    .dashboard-section p {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .btn-custom {
+        font-size: 16px;
+        padding: 12px;
+        margin-top: 10px;
+    }
+
+    .danger-zone {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="dashboard-section bg-primary">
+        <h2 class="mb-3">Bine ai venit, {{ user }}!</h2>
+        <p>Din acest panou, poți accesa rapid cele mai importante funcții ale contului tău:</p>
+        <ul>
+            <li>📦 Vizualizează comenzile plasate</li>
+            <li>👤 Gestionează informațiile contului</li>
+            <li>🚪 Deloghează-te în siguranță</li>
+        </ul>
+    </div>
+
+
+    <div class="dashboard-section bg-primary">
+        <h4>📦 Urmărire comenzi</h4>
+        <p>Vezi toate comenzile tale și statusul acestora.</p>
+        <a class="btn bg-white w-100 btn-custom color" style="color: #1a1d20" href="{% url 'track-orders' %}">
+            Urmărește comenzile mele
+        </a>
+    </div>
+
+    <div class="dashboard-section bg-primary">
+        <h4>⚙️ Gestionare cont</h4>
+        <p>Actualizează sau șterge contul tău.</p>
+        <a class="btn bg-white w-100 btn-custom" style="color: #1a1d20" href="{% url 'shipping-address' %}">
+            Actualizeaza adresa pentru livrare
+        </a>
+        <a class="btn bg-white w-100 btn-custom"  style="color: #1a1d20" href="{% url 'profile-management' %}">
+            Gestionează contul
+        </a>
+
+        <div class="danger-zone">
+            <a class="btn btn-danger w-100 btn-custom" style="color: #1a1d20" href="{% url 'delete-account' %}">
+                🗑️ ȘTERGE CONTUL!
+            </a>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-secondary btn-sm mt-3" style="color: #1a1d20" href="{% url 'user-logout' %}">Ieși din cont</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,155 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+    .form-layout {
+        border-radius: 16px;
+    }
+
+    .order-card {
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background-color: #78c2ad;
+    }
+
+    .order-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .order-id {
+        font-size: 18px;
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .order-product {
+        font-size: 16px;
+        color: #495057;
+    }
+
+    .order-quantity {
+        font-size: 15px;
+        color: #6c757d;
+    }
+
+    .order-total {
+        font-size: 17px;
+        font-weight: bold;
+        color: #28a745;
+    }
+
+    .section-title {
+        font-weight: 700;
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
+
+    .icon {
+        margin-right: 8px;
+        color: #007bff;
+    }
+
+    .status-section {
+        margin-top: 30px;
+    }
+
+    .status-heading {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #343a40;
+    }
+</style>
+
+<div class="container bg-primary shadow-md p-5 form-layout text-center mb-4">
+    <h2 class="section-title">📦 Comenzile Tale</h2>
+</div>
+
+<div class="container">
+    <div class="status-section">
+        <h3 class="status-heading">⏳ Pending</h3>
+        {% if orders %}
+            {% for order in orders %}
+                {% if order.order_status == 'Pending' %}
+                    <div class="order-card">
+                        <div class="order-id">🆔 Comanda #{{ order.id }}</div>
+
+                        {% for item in order.orderitem_set.all %}
+                            <div class="order-product mt-2">🛍️ Produs: {{ item.product.title }}</div>
+                            <div class="order-quantity">🔢 Cantitate: x{{ item.quantity }}</div>
+                        {% endfor %}
+
+                        <div class="order-total mt-3">💰 Total: {{ order.amount_paid }} LEI</div>
+                        <div class="order-quantity">🔢 Status: {{ order.order_status }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="text-center text-muted">
+                <p>Nu ai nicio comandă Pending momentan.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="status-section">
+        <h3 class="status-heading">🔨 Processing</h3>
+        {% if orders %}
+            {% for order in orders %}
+                {% if order.order_status == 'Processing' %}
+                    <div class="order-card">
+                        <div class="order-id">🆔 Comanda #{{ order.id }}</div>
+
+                        {% for item in order.orderitem_set.all %}
+                            <div class="order-product mt-2">🛍️ Produs: {{ item.product.title }}</div>
+                            <div class="order-quantity">🔢 Cantitate: x{{ item.quantity }}</div>
+                        {% endfor %}
+
+                        <div class="order-total mt-3">💰 Total: {{ order.amount_paid }} LEI</div>
+                        <div class="order-quantity">🔢 Status: {{ order.order_status }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="text-center text-muted">
+                <p>Nu ai nicio comandă Processing momentan.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="status-section">
+        <h3 class="status-heading">📦 Delivered</h3>
+        {% if orders %}
+            {% for order in orders %}
+                {% if order.order_status == 'Delivered' %}
+                    <div class="order-card">
+                        <div class="order-id">🆔 Comanda #{{ order.id }}</div>
+
+                        {% for item in order.orderitem_set.all %}
+                            <div class="order-product mt-2">🛍️ Produs: {{ item.product.title }}</div>
+                            <div class="order-quantity">🔢 Cantitate: x{{ item.quantity }}</div>
+                        {% endfor %}
+
+                        <div class="order-total mt-3">💰 Total: {{ order.amount_paid }} LEI</div>
+                        <div class="order-quantity">🔢 Status: {{ order.order_status }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="text-center text-muted">
+                <p>Nu ai nicio comandă Delivered momentan.</p>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

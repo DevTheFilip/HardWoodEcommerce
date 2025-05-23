@@ -1,0 +1,21 @@
+{% autoescape off %}
+
+O noua comanda a fost plasta pe HardWood Pellets
+
+📦 Comanda ID: [{{ order.id }}]
+
+Client: {{ order.customer_name }}
+Email: {{ order.email }}
+Telefon: {{ order.phone }}
+
+Adresă:
+{{ order.address }}
+{{ order.city }}, {{ order.postal_code }}
+
+Produse comandate:
+{% for item in items %}
+- {{ item.product }} — {{ item.quantity }} bucăți
+{% endfor %}
+
+Mulțumim!
+{% endautoescape %}

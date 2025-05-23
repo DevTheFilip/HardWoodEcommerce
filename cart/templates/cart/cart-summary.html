@@ -1,0 +1,170 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load mathfilters %}
+
+{% block content %}
+<style>
+    .cart-item {
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        padding: 20px;
+        margin-bottom: 25px;
+        background-color: #ffffff;
+    }
+
+    .cart-img {
+        border-radius: 12px;
+        object-fit: cover;
+        max-height: 180px;
+    }
+
+    .qty-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .qty-input {
+        width: 60px;
+        text-align: center;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 6px;
+    }
+
+    .qty-btn {
+        padding: 6px 12px;
+        font-size: 18px;
+        background-color: #e9ecef;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .qty-btn:hover {
+        background-color: #dee2e6;
+    }
+</style>
+
+<main class="pt-5">
+    <div class="container">
+        <h1 class="h5">Coș de cumpărături</h1>
+        <hr>
+
+        {% for item in cart %}
+            {% with product=item.product %}
+            <div class="row cart-item bg-primary">
+                <div class="col-md-3">
+                    <img class="img-fluid mx-auto d-block cart-img" src="{{ product.image.url }}" alt="{{ product.title }}">
+                </div>
+
+                <div class="col-md-9">
+                    <h5 class="mb-2">{{ product.title }}</h5>
+                    <p class="text-muted">Preț total: <strong>LEI {{ product.price|mul:item.qty }}</strong></p>
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="qty-box">
+                            <button type="button" class="qty-btn decrease-btn" data-product="{{ product.id }}">−</button>
+                            <input type="number" id="qty{{ product.id }}" class="qty-input" value="{{ item.qty }}" min="1">
+                            <button type="button" class="qty-btn increase-btn" data-product="{{ product.id }}">+</button>
+                        </div>
+
+                        <div class="mt-3 mt-md-0">
+                            <button type="button" class="btn btn-sm bg-white update-button"  style = "color: black" data-index="{{ product.id }}">Actualizează</button>
+                            <button type="button" class="btn btn-sm btn-danger delete-button" data-index="{{ product.id }}">Șterge</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+        {% empty %}
+            <p>Coșul tău este gol.</p>
+        {% endfor %}
+
+        <!-- Total general + Plata - stilizat -->
+        <div class="cart-item bg-primary text-white">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <h5 class="mb-3 mb-md-0">Total general: <span id="total" class="fw-bold">LEI {{ cart.get_total }}</span></h5>
+                <a href="{% url 'checkout' %}" class="btn btn-light">Continuă către plată</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // + și −
+    document.querySelectorAll('.increase-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.product;
+            const input = document.getElementById('qty' + id);
+            input.value = parseInt(input.value) + 1;
+        });
+    });
+
+    document.querySelectorAll('.decrease-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.product;
+            const input = document.getElementById('qty' + id);
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        });
+    });
+
+    // Previne valori negative
+    document.querySelectorAll('.qty-input').forEach(input => {
+        input.addEventListener('input', () => {
+            if (parseInt(input.value) < 1 || isNaN(input.value)) {
+                input.value = 1;
+            }
+        });
+    });
+
+    // Șterge produs
+    $(document).on('click', '.delete-button', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart-delete" %}',
+            data: {
+                product_id: $(this).data('index'),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: 'post'
+            },
+            success: function(json) {
+                location.reload();
+                document.getElementById("cart-qty").textContent = json.qty;
+                document.getElementById("total").textContent = "LEI " + json.total;
+            },
+            error: function(xhr, errmsg, err) {
+                console.error(errmsg);
+            }
+        });
+    });
+
+    // Actualizează produs
+    $(document).on('click', '.update-button', function(e) {
+        e.preventDefault();
+        const id = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart-update" %}',
+            data: {
+                product_id: id,
+                product_quantity: $('#qty' + id).val(),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: 'post'
+            },
+            success: function(json) {
+                location.reload();
+                document.getElementById("cart-qty").textContent = json.qty;
+                document.getElementById("total").textContent = "LEI " + json.total;
+            },
+            error: function(xhr, errmsg, err) {
+                console.error(errmsg);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

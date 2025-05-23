@@ -1,0 +1,77 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+    .products-wrapper {
+        position: relative;
+        z-index: 1;
+        background-color: #78c2ad; /* Bootstrap Primary */
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 60px;
+        color: white;
+    }
+
+    .product-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        background-color: #78c2ad;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        text-decoration: none !important;
+        color: inherit;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .product-image {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .product-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+    }
+
+    .price-tag {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #212529;
+    }
+</style>
+
+<div class="container mt-5 products-wrapper text-white">
+    <h2 class="mb-4">Produse disponibile</h2>
+    <hr class="mb-5 bg-light">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        {% for product in all_products %}
+        <div class="col">
+            <a href="{{ product.get_absolute_url }}" class="product-card">
+                <img class="product-image" src="{{ product.image.url }}" alt="Product image">
+                <div class="card-body p-3 d-flex flex-column h-100">
+                    <div class="product-title">{{ product.title|capfirst }}</div>
+                    <div class="mt-auto price-tag">LEI {{ product.price }}</div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

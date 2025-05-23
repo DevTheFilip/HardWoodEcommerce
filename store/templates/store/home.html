@@ -1,0 +1,80 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block body_class %}white-body{% endblock %}
+
+{% block extra_head %}
+<style>
+    .white-body {
+        background-color: white !important;
+        color: black !important;
+        background-image: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- HEADER HERO -->
+<section class="py-5 bg-light text-center">
+    <div class="container">
+        <img src="{% static 'media/images/logo.png' %}" alt="HardWood Pellets Logo" class="mb-4" style="max-height: 150px;">
+        <h1 class="display-4 fw-bold">Încălzește-ți casa cu <span class="text-primary">HardWood Pellets</span></h1>
+        <p class="lead">Soluția ecologică, eficientă și economică pentru un cămin călduros.</p>
+        <a href="{% url 'store' %}" class="btn btn-primary btn-lg mt-3">Vezi Magazinul</a>
+    </div>
+</section>
+
+<!-- BENEFICII -->
+<section class="bg-white text-white py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">De ce să alegi peleții noștri?</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <img src="{% static 'media/images/eco.jpg' %}" alt="Eco" class="mb-3" style="height: 200px;">
+                <h5>100% Naturali</h5>
+                <p style = "color : #78c2ad">Fără aditivi sau chimicale. Numai lemn comprimat de calitate superioară.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'media/images/economy.jpg' %}" alt="Economie" class="mb-3" style="height: 200px;">
+                <h5>Eficiență Maximă</h5>
+                <p style = "color : #78c2ad">Putere calorică ridicată și consum redus. Ideal pentru centrale automate.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'media/images/local.jpg' %}" alt="Local" class="mb-3" style="height: 200px;">
+                <h5>Producție Locală</h5>
+                <p style = "color : #78c2ad">Susținem economia românească prin parteneriate locale de încredere.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALE -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Ce spun clienții noștri</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <blockquote class="blockquote">
+                    <p>"Peleții sunt de o calitate excelentă. Ard curat și țin căldura foarte bine!"</p>
+                    <footer class="blockquote-footer text-white-50">Andrei, Brașov</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-6">
+                <blockquote class="blockquote">
+                    <p>"Livrare rapidă și preț corect. Recomand cu încredere!"</p>
+                    <footer class="blockquote-footer text-white-50">Maria, Cluj-Napoca</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="py-5 bg-white text-center">
+    <div class="container">
+        <h2 class="fw-bold">Comandă azi și simte diferența!</h2>
+        <p class="mb-4">Produse disponibile pe stoc. Transport rapid oriunde în țară.</p>
+        <a href="{% url 'store' %}" class="btn btn-success btn-lg">Cumpără Acum</a>
+    </div>
+</section>
+{% endblock %}

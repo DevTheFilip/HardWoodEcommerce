@@ -1,0 +1,52 @@
+{% include "store/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    .info-text {
+        color: #144514;
+        font-weight: bold;
+    }
+
+    .email-icon {
+        color: #144514;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .form-layout {
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #f8f9fa;
+        padding: 2rem;
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 576px) {
+        .form-layout {
+            padding: 1rem;
+            max-width: calc(100% - 2rem); /* prevent overflow */
+        }
+
+        .email-icon {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<div class="container py-4">
+    <div class="form-layout shadow-sm bg-primary">
+        <i class="fas fa-envelope-circle-check email-icon"></i>
+        <h3><span class="info-text">Verificare trimisă!</span></h3>
+        <p>Un link de verificare a fost trimis către adresa ta de email.</p>
+        <p>Te rugăm să îți verifici căsuța de email pentru a-ți activa contul.</p>
+    </div>
+</div>
+
+{% endblock %}

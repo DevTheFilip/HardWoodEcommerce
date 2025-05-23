@@ -1,0 +1,53 @@
+{% include "store/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Asigură-te că ai inclus Font Awesome în base.html sau aici -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    .success-text {
+        color: green;
+        font-weight: bold;
+    }
+
+    .success-icon {
+        color: green;
+        margin-right: 10px;
+    }
+
+    .form-layout {
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #ffffff;
+        padding: 2rem;
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 576px) {
+        .form-layout {
+            padding: 1rem;
+            max-width: calc(100% - 2rem); /* Prevents horizontal scroll */
+        }
+
+        .success-icon {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<div class="container py-4">
+    <div class="form-layout shadow-sm bg-primary">
+        <h3>
+            <i class="fas fa-check-circle success-icon"></i>
+            <span class="success-text">Succes:</span> Contul tău a fost verificat cu succes!
+        </h3>
+        <p>Te poți autentifica acum în contul tău.</p>
+    </div>
+</div>
+
+{% endblock %}

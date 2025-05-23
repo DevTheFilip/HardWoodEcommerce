@@ -1,0 +1,64 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+    .register-container {
+        margin-top: 80px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .register-container h3 {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .register-container h5 {
+        color: #6c757d;
+        font-weight: normal;
+        margin-bottom: 30px;
+    }
+
+    .btn-register {
+        font-size: 18px;
+        padding: 12px;
+    }
+</style>
+
+<div class="container">
+    <div class="register-container bg-primary">
+        <h3>Înregistrare</h3>
+        <h5>Crează-ți cont pentru a comanda produsele preferate</h5>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ form.username|as_crispy_field }}
+            <br>
+            {{ form.email|as_crispy_field }}
+            <br>
+            {{ form.password1|as_crispy_field }}
+            <br>
+            {{ form.password2|as_crispy_field }}
+
+            <button type="submit" class="btn btn-secondary w-100 mt-4 btn-register">
+                📝 Creează cont
+            </button>
+            <br>
+            <div class = "text-center">
+                <a href=" {% url 'my-login' %}" class="btn btn-link" style="color: black">Ai deja un cont? Autentifică-te!</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

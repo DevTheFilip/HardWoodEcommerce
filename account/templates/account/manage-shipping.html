@@ -1,0 +1,58 @@
+{% include "store/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+    .shipping-container {
+        margin-top: 80px;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .shipping-container h3 {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .shipping-container h5 {
+        color: #6c757d;
+        font-weight: normal;
+        margin-bottom: 30px;
+    }
+
+    .btn-shipping {
+        font-size: 18px;
+        padding: 12px;
+    }
+</style>
+
+<div class="container">
+    <div class="shipping-container bg-primary">
+        <h3>Adresă de livrare</h3>
+        <h5>Completează detaliile pentru expedierea comenzii</h5>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ form.full_name|as_crispy_field }}
+            {{ form.phone_number|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+            {{ form.address_line_1|as_crispy_field }}
+            {{ form.address_line_2|as_crispy_field }}
+            {{ form.city|as_crispy_field }}
+            {{ form.state|as_crispy_field }}
+            {{ form.postal_code|as_crispy_field }}
+
+            <button type="submit" class="btn bg-white w-100 mt-4 btn-shipping" style = "color: #1a1d20">
+                🚚 Confirmă livrarea
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
