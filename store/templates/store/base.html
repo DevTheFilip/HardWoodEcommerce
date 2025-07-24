@@ -17,13 +17,8 @@
 </head>
 
 <body>
-
-
 <style>
-
-
-
-        .island-container {
+    .island-container {
         margin-top: 80px;
         background-color: #78c2ad;
         padding: 40px;
@@ -34,11 +29,10 @@
         margin-right: auto;
     }
 
-
-        .island {
+    .island {
         position: relative;
         z-index: 1;
-        background-color: #78c2ad; /* Bootstrap Primary */
+        background-color: #78c2ad;
         border-radius: 20px;
         padding: 40px 30px;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -46,9 +40,7 @@
         color: white;
     }
 
-
-
-        body {
+    body {
         background-color: #DAFFE3;
         color: white;
         position: relative;
@@ -72,7 +64,7 @@
         </button>
 
         <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
-            <!-- Stânga: Magazin și Contact -->
+            <!-- Stânga -->
             <ul class="navbar-nav me-auto w-100 justify-content-lg-start justify-content-center mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{% url 'store' %}">Magazin</a>
@@ -82,7 +74,7 @@
                 </li>
             </ul>
 
-            <!-- Dreapta: autentificare, înregistrare, coș -->
+            <!-- Dreapta -->
             <ul class="navbar-nav ms-auto d-flex align-items-lg-center flex-lg-row flex-column gap-2 w-100 justify-content-lg-end justify-content-center">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -95,8 +87,6 @@
                             <i class="fa fa-sign-out"></i> Deconectare
                         </a>
                     </li>
-
-                    <!-- Butonul pentru Admin -->
                     {% if user.is_staff %}
                         <li class="nav-item">
                             <a class="btn btn-sm btn-outline-light" href="{% url 'manage-orders' %}">
@@ -104,7 +94,6 @@
                             </a>
                         </li>
                     {% endif %}
-
                 {% else %}
                     <li class="nav-item">
                         <a class="btn btn-sm btn-outline-light" href="{% url 'register' %}">Înregistrare</a>
@@ -114,21 +103,34 @@
                     </li>
                 {% endif %}
 
+                <!-- ✅ POZE VIZIBILE PENTRU TOȚI -->
+                <li class="nav-item">
+                    <img src="{% static 'media/images/Afir1.jpeg' %}"
+                         alt="Promo 1"
+                         class="rounded"
+                         style="height:40px; width:auto;">
+                </li>
+                <li class="nav-item">
+                    <img src="{% static 'media/images/Afir2.jpeg' %}"
+                         alt="Promo 2"
+                         class="rounded"
+                         style="height:40px; width:auto;">
+                </li>
+
                 <li class="nav-item">
                     <a href="{% url 'cart-summary' %}" class="btn btn-outline-light position-relative">
                         <i class="fa fa-shopping-cart"></i>
-                            <span id="cart-qty" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {% with qty_amount=cart|length %}
-                                    {{ qty_amount|default:"0" }}
-                                {% endwith %}
-                            </span>
+                        <span id="cart-qty" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {% with qty_amount=cart|length %}
+                                {{ qty_amount|default:"0" }}
+                            {% endwith %}
+                        </span>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 
 <!-- MESSAGES -->
 <style>
